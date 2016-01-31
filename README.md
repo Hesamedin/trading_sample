@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Payum/Payum.png?branch=master)](https://circleci.com/gh/Hesamedin/Mobicoin)
+                      
                       _.--.
                   _.-'_:-'||
               _.-'_.-::::'||
