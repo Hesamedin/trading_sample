@@ -1,22 +1,38 @@
 package com.mobify.hesam;
 
-import android.test.AndroidTestCase;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
 import com.mobify.model.Exchange;
 
-public class ExchangeTest extends AndroidTestCase {
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(AndroidJUnit4.class)
+public class ExchangeTest
+{
+    @Rule
+    public final ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+
     Exchange exchange;
 
-    @Override
-    public void setUp() {
+    @Before
+    public void setUp()
+    {
         exchange = new Exchange();
     }
 
-    public void testBuy() {
+    @Test
+    public void testBuy()
+    {
         exchange.buy("Mobi", 1.0, 1);
     }
 
-    public void testSell() {
+    @Test
+    public void testSell()
+    {
         exchange.sell("Fyi", 1.0, 1);
     }
 }
