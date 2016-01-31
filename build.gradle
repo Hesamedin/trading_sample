@@ -12,6 +12,8 @@ buildscript {
     }
 }
 
+apply plugin: 'findbugs'
+
 allprojects {
     repositories {
         jcenter()
@@ -20,4 +22,25 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+configure(allprojects) {
+    apply plugin: 'findbugs'
+
+    task findbugs(type: FindBugs) {
+        ignoreFailures = false
+        effort = "max"
+
+        classes = fileTree('build/intermediates/classes/')
+        source = fileTree('src/main/java')
+        classpath = files()
+
+        excludeFilter = file("$rootProject.rootDir/config/findbugs/exclude.xml")
+
+        reportLevel = "high"
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
 }
