@@ -15,6 +15,7 @@ import com.mobify.model.Exchange;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatActivity
         // Case 1, User is selling and its price is higher than the max of Buy list
         if (exchange.getCategory() == Exchange.Category.SELL && exchange.getPrice() > this.mBuyList.get(0).getPrice())
         {
+            Log.d(TAG, "Case 1 called");
             this.mSellList.add(exchange);
             Collections.sort(this.mSellList, new ExchangeComparator());
             this.refreshRecyclerView();
@@ -188,6 +190,7 @@ public class MainActivity extends AppCompatActivity
         // Case 2, User is buying and its price is less then the min of Sell list
         if (exchange.getCategory() == Exchange.Category.BUY && exchange.getPrice() < this.mSellList.get(0).getPrice())
         {
+            Log.d(TAG, "Case 2 called");
             this.mBuyList.add(exchange);
             Collections.sort(this.mBuyList, new ExchangeComparator());
             Collections.reverse(this.mBuyList);
@@ -195,52 +198,55 @@ public class MainActivity extends AppCompatActivity
             return;
         }
 
-        // Case 3, User is buying and its price is in range of two orders in Sell list
+        // Case 3, User is buying and his price is more the min price in Sell list
         if (exchange.getCategory() == Exchange.Category.BUY)
         {
+            Log.d(TAG, "Case 3 called");
             // Find candidate Exchange
             Exchange candidate = null;
-            for (int i = 0; i < this.mSellList.size(); i++)
+            ListIterator li = this.mSellList.listIterator(this.mSellList.size());
+            while (li.hasPrevious())
             {
-                if (exchange.getPrice() < this.mSellList.get(i).getPrice())
+                candidate = (Exchange) li.previous();
+                if (exchange.getPrice() > candidate.getPrice())
                 {
-                    candidate = this.mSellList.get(--i);
                     break;
                 }
-
-                candidate = this.mSellList.get(i);
             }
 
-            // Candidate must be find, this is for later checking
+            // Candidate must be found, but checking is always awesome!
             if (candidate == null)
             {
                 Log.e(TAG, "Candidate did not found!");
                 return;
             }
 
-            // Case 3.1, If quantity of order is more than/equal to the quantity of candidate
+            // Case 3.1, If quantity of order is more than the quantity of candidate
             if (exchange.getQuantity() > candidate.getQuantity())
             {
+                Log.d(TAG, "Case 3.1 called");
                 exchange.buy(candidate.getOrigin(), candidate.getPrice(), candidate.getQuantity());
                 this.mSellList.remove(candidate);
-                this.mBuyList.add(exchange);
+
+                // recursion
+                placeOrder(exchange);
+                return;
             }
             // Case 3.2, If quantity of order is equal to the quantity of candidate
             if (exchange.getQuantity() == candidate.getQuantity())
             {
+                Log.d(TAG, "Case 3.2 called");
                 exchange.buy(candidate.getOrigin(), candidate.getPrice(), candidate.getQuantity());
                 this.mSellList.remove(candidate);
             }
             // Case 3.3, If quantity of order is less than the quantity of candidate
             else
             {
-                exchange.buy(candidate.getOrigin(), candidate.getPrice(), exchange.getQuantity());
+                Log.d(TAG, "Case 3.3 called");
                 candidate.setQuantity(candidate.getQuantity() - exchange.getQuantity());
+                exchange.buy(candidate.getOrigin(), candidate.getPrice(), exchange.getQuantity());
             }
 
-            Collections.sort(this.mSellList, new ExchangeComparator());
-            Collections.sort(this.mBuyList, new ExchangeComparator());
-            Collections.reverse(this.mBuyList);
             this.refreshRecyclerView();
             return;
         }
@@ -248,6 +254,7 @@ public class MainActivity extends AppCompatActivity
         // Case 4, User is selling and its price is in range of two orders in Buy list
         if (exchange.getCategory() == Exchange.Category.SELL)
         {
+            Log.d(TAG, "Case 4 called");
             // Find candidate Exchange
             Exchange candidate = null;
             for (int i = 0; i < this.mBuyList.size(); i++)
@@ -271,6 +278,7 @@ public class MainActivity extends AppCompatActivity
             // Case 4.1, If quantity of order is more than/equal to the quantity of candidate
             if (exchange.getQuantity() > candidate.getQuantity())
             {
+                Log.d(TAG, "Case 4.1 called");
                 exchange.sell(candidate.getOrigin(), candidate.getPrice(), candidate.getQuantity());
                 this.mBuyList.remove(candidate);
                 this.mSellList.add(exchange);
@@ -278,12 +286,14 @@ public class MainActivity extends AppCompatActivity
             // Case 4.2, If quantity of order is equal to the quantity of candidate
             else if (exchange.getQuantity() == candidate.getQuantity())
             {
+                Log.d(TAG, "Case 4.2 called");
                 exchange.sell(candidate.getOrigin(), candidate.getPrice(), candidate.getQuantity());
                 this.mBuyList.remove(candidate);
             }
             // Case 4.3, If quantity of order is less than the quantity of candidate
             else
             {
+                Log.d(TAG, "Case 4.3 called");
                 candidate.setQuantity(candidate.getQuantity() - exchange.getQuantity());
                 exchange.sell(candidate.getOrigin(), candidate.getPrice(), exchange.getQuantity());
             }
