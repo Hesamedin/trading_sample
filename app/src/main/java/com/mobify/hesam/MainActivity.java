@@ -58,16 +58,19 @@ public class MainActivity extends AppCompatActivity
         exchange_1.setCategory(Exchange.Category.BUY);
         exchange_1.setQuantity(100);
         exchange_1.setPrice(10.0f);
+        exchange_1.setOrigin("SOMEONE");
 
         Exchange exchange_2 = new Exchange();
         exchange_2.setCategory(Exchange.Category.BUY);
         exchange_2.setQuantity(50);
         exchange_2.setPrice(9.50f);
+        exchange_2.setOrigin("SOMEONE");
 
         Exchange exchange_3 = new Exchange();
         exchange_3.setCategory(Exchange.Category.BUY);
         exchange_3.setQuantity(20);
         exchange_3.setPrice(8.99f);
+        exchange_3.setOrigin("SOMEONE");
 
         list.add(exchange_1);
         list.add(exchange_2);
@@ -84,16 +87,19 @@ public class MainActivity extends AppCompatActivity
         exchange_1.setCategory(Exchange.Category.SELL);
         exchange_1.setQuantity(10);
         exchange_1.setPrice(11.00f);
+        exchange_1.setOrigin("SOMEONE");
 
         Exchange exchange_2 = new Exchange();
         exchange_2.setCategory(Exchange.Category.SELL);
         exchange_2.setQuantity(500);
         exchange_2.setPrice(12.50f);
+        exchange_2.setOrigin("SOMEONE");
 
         Exchange exchange_3 = new Exchange();
         exchange_3.setCategory(Exchange.Category.SELL);
         exchange_3.setQuantity(200);
         exchange_3.setPrice(13.49f);
+        exchange_3.setOrigin("SOMEONE");
 
         list.add(exchange_1);
         list.add(exchange_2);

@@ -23,6 +23,7 @@ public class Exchange
     }
 
     private Category mCategory;
+    private String mOrigin;
     private float mPrice;
     private int mQuantity;
 
@@ -50,9 +51,10 @@ public class Exchange
     {
         return "Exchange {" +
                 "mCategory=" + mCategory +
+                ", mOrigin='" + mOrigin + '\'' +
                 ", mPrice=" + mPrice +
                 ", mQuantity=" + mQuantity +
-                " }";
+                "}";
     }
 
     public Category getCategory()
@@ -83,5 +85,15 @@ public class Exchange
     public void setPrice(float price)
     {
         mPrice = price;
+    }
+
+    public String getOrigin()
+    {
+        return mOrigin;
+    }
+
+    public void setOrigin(String origin)
+    {
+        mOrigin = origin;
     }
 }

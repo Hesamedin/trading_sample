@@ -63,6 +63,7 @@ public class OrderDialogFragment extends DialogFragment implements View.OnClickL
 
         // create new object
         mExchange = new Exchange();
+        mExchange.setOrigin("ME");
 
         int category = getArguments().getInt(OrderDialogFragment.KEY_CATEGORY);
         if (category == OrderDialogFragment.ORDER_CAT_BUYER)
