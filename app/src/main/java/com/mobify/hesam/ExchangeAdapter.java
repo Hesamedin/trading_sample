@@ -54,12 +54,12 @@ public class ExchangeAdapter extends RecyclerView.Adapter<ExchangeAdapter.ViewHo
         if (position > 0)
         {
             Exchange preExchange = this.getItem(--position);
-            needHeader = exchange.getOrigin() != preExchange.getOrigin();
+            needHeader = exchange.getCategory() != preExchange.getCategory();
         }
 
         // Display header of Order is needed
         holder.tvHeader.setVisibility(needHeader ? View.VISIBLE : View.GONE);
-        holder.tvHeader.setText(exchange.getOrigin() == Exchange.Origin.BUY?
+        holder.tvHeader.setText(exchange.getCategory() == Exchange.Category.BUY?
                 this.mContext.getString(R.string.buy) : this.mContext.getString(R.string.sell));
 
         // Display Order, for sake of memory optimization we use string builder

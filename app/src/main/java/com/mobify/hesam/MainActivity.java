@@ -1,10 +1,14 @@
 package com.mobify.hesam;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListView;
+import android.util.Log;
+import android.view.View;
 
 import com.mobify.model.Exchange;
 
@@ -51,17 +55,17 @@ public class MainActivity extends AppCompatActivity
         List<Exchange> list = new ArrayList<>(3);
 
         Exchange exchange_1 = new Exchange();
-        exchange_1.setOrigin(Exchange.Origin.BUY);
+        exchange_1.setCategory(Exchange.Category.BUY);
         exchange_1.setQuantity(100);
         exchange_1.setPrice(10.0f);
 
         Exchange exchange_2 = new Exchange();
-        exchange_2.setOrigin(Exchange.Origin.BUY);
+        exchange_2.setCategory(Exchange.Category.BUY);
         exchange_2.setQuantity(50);
         exchange_2.setPrice(9.50f);
 
         Exchange exchange_3 = new Exchange();
-        exchange_3.setOrigin(Exchange.Origin.BUY);
+        exchange_3.setCategory(Exchange.Category.BUY);
         exchange_3.setQuantity(20);
         exchange_3.setPrice(8.99f);
 
@@ -77,17 +81,17 @@ public class MainActivity extends AppCompatActivity
         List<Exchange> list = new ArrayList<>(3);
 
         Exchange exchange_1 = new Exchange();
-        exchange_1.setOrigin(Exchange.Origin.SELL);
+        exchange_1.setCategory(Exchange.Category.SELL);
         exchange_1.setQuantity(10);
         exchange_1.setPrice(11.00f);
 
         Exchange exchange_2 = new Exchange();
-        exchange_2.setOrigin(Exchange.Origin.SELL);
+        exchange_2.setCategory(Exchange.Category.SELL);
         exchange_2.setQuantity(500);
         exchange_2.setPrice(12.50f);
 
         Exchange exchange_3 = new Exchange();
-        exchange_3.setOrigin(Exchange.Origin.SELL);
+        exchange_3.setCategory(Exchange.Category.SELL);
         exchange_3.setQuantity(200);
         exchange_3.setPrice(13.49f);
 
@@ -96,5 +100,50 @@ public class MainActivity extends AppCompatActivity
         list.add(exchange_3);
 
         return list;
+    }
+
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.btnBuy:
+                showOrderDialog(OrderDialogFragment.ORDER_CAT_BUYER);
+                break;
+            case R.id.btnSell:
+                showOrderDialog(OrderDialogFragment.ORDER_CAT_SELLER);
+                break;
+            default:
+                Log.e(TAG, "wtf, we shouldn't be there!!!");
+                break;
+        }
+    }
+
+    /**
+     * Dialog is responsible to create and return {@link Exchange} object if user confirm it.
+     *
+     * @param orderCategory Pass OrderDialogFragment.ORDER_CAT_BUYER if User has clicked Buyer,
+     *                      OrderDialogFragment.ORDER_CAT_SELLER if user has clicked Seller
+     */
+    private void showOrderDialog(int orderCategory)
+    {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction. We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null)
+        {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog
+        DialogFragment newFragment = OrderDialogFragment.newInstance(orderCategory);
+        newFragment.show(ft, "dialog");
+    }
+
+    public void placeOrder(Exchange exchange)
+    {
+        Log.d(TAG, "=> " + exchange);
     }
 }

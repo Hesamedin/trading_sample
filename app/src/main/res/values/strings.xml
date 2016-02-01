@@ -5,4 +5,9 @@
     <string name="sell">Sell</string>
     <string name="moc_at_cad">MOC at $</string>
     <string name="cad_to_moc">CAD/MOC</string>
+    <string name="moc">MOC</string>
+    <string name="cad">CAD</string>
+    <string name="at">At</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>

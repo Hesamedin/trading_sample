@@ -15,13 +15,14 @@ public class Exchange
     /**
      * Type of order that sets the order in either of Buy/Sell category.
      */
-    public enum Origin
+    public enum Category
     {
+        NONE,
         BUY,
         SELL
     }
 
-    private Origin mOrigin;
+    private Category mCategory;
     private float mPrice;
     private int mQuantity;
 
@@ -32,26 +33,36 @@ public class Exchange
 
     public void buy(float price, int quantity)
     {
-        this.mOrigin = Origin.BUY;
+        this.mCategory = Category.BUY;
         this.mPrice = price;
         this.mQuantity = quantity;
     }
 
     public void sell(float price, int quantity)
     {
-        this.mOrigin = Origin.SELL;
+        this.mCategory = Category.SELL;
         this.mPrice = price;
         this.mQuantity = quantity;
     }
 
-    public Origin getOrigin()
+    @Override
+    public String toString()
     {
-        return mOrigin;
+        return "Exchange {" +
+                "mCategory=" + mCategory +
+                ", mPrice=" + mPrice +
+                ", mQuantity=" + mQuantity +
+                " }";
     }
 
-    public void setOrigin(Origin origin)
+    public Category getCategory()
     {
-        mOrigin = origin;
+        return mCategory;
+    }
+
+    public void setCategory(Category category)
+    {
+        mCategory = category;
     }
 
     public int getQuantity()
