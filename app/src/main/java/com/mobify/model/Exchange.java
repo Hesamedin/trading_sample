@@ -48,10 +48,7 @@ public class Exchange implements Comparable
 
     public void sell(String origin, float price, int quantity)
     {
-        this.mCategory = Category.SELL;
-        this.mOrigin = origin;
-        this.mPrice = price;
-        this.mQuantity = quantity;
+        this.mQuantity -= quantity;
 
         Log.d(TAG, "Number of " + quantity + " MOC soled at CA$" + price + " to " + origin);
     }

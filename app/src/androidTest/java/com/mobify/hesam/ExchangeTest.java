@@ -27,12 +27,12 @@ public class ExchangeTest
     @Test
     public void testBuy()
     {
-        exchange.buy("Mobi", 1.0, 1);
+        exchange.buy("Mobi", 1.0f, 1);
     }
 
     @Test
     public void testSell()
     {
-        exchange.sell("Fyi", 1.0, 1);
+        exchange.sell("Fyi", 1.0f, 1);
     }
 }
