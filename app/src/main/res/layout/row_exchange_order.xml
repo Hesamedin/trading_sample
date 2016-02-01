@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
+    <!--  Header view displays either of BUY or SELL depends on the business logic -->
     <TextView
-        android:id="@+id/tvCountry"
+        android:id="@+id/tvHeader"
+        style="@style/order.title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start"
+        tools:text="buy"
+        />
+
+    <!-- Order view in this form, 10 MOC at $11.50   CAD/MOC -->
+    <TextView
+        android:id="@+id/tvOrder"
+        style="@style/order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="100"
         />
 
 </LinearLayout>
