@@ -109,6 +109,24 @@ public class MainActivity extends AppCompatActivity
         return list;
     }
 
+    /**
+     * Returns But List.
+     * @return List<Exchange>
+     */
+    public List<Exchange> getBuyList()
+    {
+        return this.mBuyList;
+    }
+
+    /**
+     * Returns Sell List.
+     * @return List<Exchange>
+     */
+    public List<Exchange> getSellList()
+    {
+        return this.mSellList;
+    }
+
     public void onClick(View view)
     {
         switch (view.getId())
