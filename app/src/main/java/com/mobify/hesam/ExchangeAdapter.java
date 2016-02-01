@@ -75,6 +75,8 @@ public class ExchangeAdapter extends RecyclerView.Adapter<ExchangeAdapter.ViewHo
         builder.append(this.mContext.getString(R.string.moc_at_cad));
         builder.append(" ");
         builder.append(exchange.getPrice());
+        builder.append(" ");
+        builder.append(this.mContext.getString(R.string.cad_to_moc));
         holder.tvOrder.setText(builder.toString());
     }
 
