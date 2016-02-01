@@ -29,6 +29,12 @@ public class ExchangeAdapter extends RecyclerView.Adapter<ExchangeAdapter.ViewHo
         this.mExchangeList = exchangeList;
     }
 
+    public void updateDataSet(final List<Exchange> exchangeList)
+    {
+        this.mExchangeList = exchangeList;
+        this.notifyDataSetChanged();
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType)

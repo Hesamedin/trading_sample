@@ -1,5 +1,9 @@
 package com.mobify.model;
 
+import android.support.annotation.NonNull;
+
+import java.util.Comparator;
+
 /**
  * Implement the `Exchange` stub class found below. A stub test suite is also included.
  * <p/>
@@ -10,7 +14,7 @@ package com.mobify.model;
  * Good luck!
  */
 
-public class Exchange
+public class Exchange implements Comparable
 {
     /**
      * Type of order that sets the order in either of Buy/Sell category.
@@ -55,6 +59,13 @@ public class Exchange
                 ", mPrice=" + mPrice +
                 ", mQuantity=" + mQuantity +
                 "}";
+    }
+
+    @Override
+    public int compareTo(@NonNull Object another)
+    {
+        float anotherPrice = ((Exchange) another).getPrice();
+        return Float.compare(this.mPrice, anotherPrice);
     }
 
     public Category getCategory()

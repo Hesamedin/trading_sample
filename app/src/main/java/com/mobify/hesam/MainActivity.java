@@ -13,16 +13,17 @@ import android.view.View;
 import com.mobify.model.Exchange;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private RecyclerView recyclerView;
+    private ExchangeAdapter mAdapter;
 
-    private List<Exchange> buyList;
-    private List<Exchange> sellList;
+    private List<Exchange> mBuyList;
+    private List<Exchange> mSellList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,20 +33,20 @@ public class MainActivity extends AppCompatActivity
 
         List<Exchange> list = getDemoExchangeList();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ExchangeAdapter adapter = new ExchangeAdapter(this, list);
-        recyclerView.setAdapter(adapter);
+        mAdapter = new ExchangeAdapter(this, list);
+        recyclerView.setAdapter(mAdapter);
     }
 
     private List<Exchange> getDemoExchangeList()
     {
-        this.buyList = getDemoBuyList();
-        this.sellList = getDemoSellList();
+        this.mBuyList = getDemoBuyList();
+        this.mSellList = getDemoSellList();
 
         // For sake of optimization I set it to 6 since I know the exact number
-        List<Exchange> newList = new ArrayList<>(this.buyList);
-        newList.addAll(this.sellList);
+        List<Exchange> newList = new ArrayList<>(this.mBuyList);
+        newList.addAll(this.mSellList);
 
         return newList;
     }
@@ -148,8 +149,39 @@ public class MainActivity extends AppCompatActivity
         newFragment.show(ft, "dialog");
     }
 
+    /**
+     * Gets called when user places an order. It gets called from {@link OrderDialogFragment}
+     *
+     * @param exchange
+     */
     public void placeOrder(Exchange exchange)
     {
         Log.d(TAG, "=> " + exchange);
+
+        // Case 1, User is selling and its price is higher than the max of Buy list
+        if (exchange.getCategory() == Exchange.Category.SELL && exchange.getPrice() > this.mBuyList.get(0).getPrice())
+        {
+            this.mSellList.add(exchange);
+            Collections.sort(this.mSellList, new ExchangeComparator());
+            this.refreshRecyclerView();
+        }
+
+        // Case 2, User is buying and its price is less then the min of Sell list
+        if (exchange.getCategory() == Exchange.Category.BUY && exchange.getPrice() < this.mSellList.get(0).getPrice())
+        {
+            Log.d(TAG, "*** I'm here ***");
+            this.mBuyList.add(exchange);
+            Collections.sort(this.mBuyList, new ExchangeComparator());
+            Collections.reverse(this.mBuyList);
+            this.refreshRecyclerView();
+        }
+    }
+
+    private void refreshRecyclerView()
+    {
+        // For sake of optimization I set it to 6 since I know the exact number
+        List<Exchange> newList = new ArrayList<>(this.mBuyList);
+        newList.addAll(this.mSellList);
+        this.mAdapter.updateDataSet(newList);
     }
 }
