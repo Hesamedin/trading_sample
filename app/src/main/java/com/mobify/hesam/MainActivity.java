@@ -164,16 +164,62 @@ public class MainActivity extends AppCompatActivity
             this.mSellList.add(exchange);
             Collections.sort(this.mSellList, new ExchangeComparator());
             this.refreshRecyclerView();
+            return;
         }
 
         // Case 2, User is buying and its price is less then the min of Sell list
         if (exchange.getCategory() == Exchange.Category.BUY && exchange.getPrice() < this.mSellList.get(0).getPrice())
         {
-            Log.d(TAG, "*** I'm here ***");
             this.mBuyList.add(exchange);
             Collections.sort(this.mBuyList, new ExchangeComparator());
             Collections.reverse(this.mBuyList);
             this.refreshRecyclerView();
+            return;
+        }
+
+        // Case 3, User is buying and its price is in range of two orders in Sell list
+        if (exchange.getCategory() == Exchange.Category.BUY)
+        {
+            Log.d(TAG, "*** I'm here ***");
+            // Find candidate Exchange
+            Exchange candidate = null;
+            for (int i = 0; i <= this.mSellList.size(); i++)
+            {
+                if (exchange.getPrice() < this.mSellList.get(i).getPrice())
+                {
+                    candidate = this.mSellList.get(--i);
+                    break;
+                }
+
+                candidate = this.mSellList.get(i);
+            }
+
+            // Candidate must be find, this is for later checking
+            if (candidate == null)
+            {
+                Log.e(TAG, "Candidate did not found!");
+                return;
+            }
+
+            // Case 3.1, If quantity of order is more than/equal to the quantity of candidate
+            if (exchange.getQuantity() >= candidate.getQuantity())
+            {
+                exchange.buy(candidate.getOrigin(), candidate.getPrice(), candidate.getQuantity());
+                this.mSellList.remove(candidate);
+                this.mBuyList.add(exchange);
+            }
+            // Case 3.2, If quantity of order is less than the quantity of candidate
+            else
+            {
+                exchange.buy(candidate.getOrigin(), candidate.getPrice(), exchange.getQuantity());
+                candidate.setQuantity(candidate.getQuantity() - exchange.getQuantity());
+            }
+
+            Collections.sort(this.mSellList, new ExchangeComparator());
+            Collections.sort(this.mBuyList, new ExchangeComparator());
+            Collections.reverse(this.mBuyList);
+            this.refreshRecyclerView();
+            return;
         }
     }
 

@@ -1,6 +1,7 @@
 package com.mobify.model;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.Comparator;
 
@@ -16,6 +17,8 @@ import java.util.Comparator;
 
 public class Exchange implements Comparable
 {
+    public static final String TAG = Exchange.class.getSimpleName();
+
     /**
      * Type of order that sets the order in either of Buy/Sell category.
      */
@@ -33,21 +36,24 @@ public class Exchange implements Comparable
 
     public Exchange()
     {
-
+        this.mCategory = Category.NONE;
     }
 
-    public void buy(float price, int quantity)
+    public void buy(String origin, float price, int quantity)
     {
-        this.mCategory = Category.BUY;
-        this.mPrice = price;
-        this.mQuantity = quantity;
+        this.mQuantity -= quantity;
+
+        Log.d(TAG, "Number of " + quantity + " MOC bought at CA$" + price + " from " + origin);
     }
 
-    public void sell(float price, int quantity)
+    public void sell(String origin, float price, int quantity)
     {
         this.mCategory = Category.SELL;
+        this.mOrigin = origin;
         this.mPrice = price;
         this.mQuantity = quantity;
+
+        Log.d(TAG, "Number of " + quantity + " MOC soled at CA$" + price + " to " + origin);
     }
 
     @Override
