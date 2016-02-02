@@ -24,14 +24,14 @@ test:
     - (./gradlew assemble):
                 timeout: 360
     # start the emulator
-    - emulator -avd circleci-android22 -no-audio -no-window:
-        background: true
-        parallel: true
+    #- emulator -avd circleci-android22 -no-audio -no-window:
+    #    background: true
+    #    parallel: true
     # wait for it to have booted
-    - circle-android wait-for-boot
-    # run tests against the emulator.
-    - ./gradlew connectedAndroidTest
+    #- circle-android wait-for-boot
+    # run tests  against the emulator.
+    #- ./gradlew connectedAndroidTest
     # copy the build outputs to artifacts
-    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    #- cp -r app/build/outputs $CIRCLE_ARTIFACTS
     # copy the test results to the test results directory.
-    - cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+    #- cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
