@@ -251,37 +251,38 @@ public class MainActivity extends AppCompatActivity
             return;
         }
 
-        // Case 4, User is selling and its price is in range of two orders in Buy list
+        // Case 4, User is selling and his price is less than the max price in Buy list
         if (exchange.getCategory() == Exchange.Category.SELL)
         {
             Log.d(TAG, "Case 4 called");
             // Find candidate Exchange
             Exchange candidate = null;
-            for (int i = 0; i < this.mBuyList.size(); i++)
+            for (Exchange item : this.mBuyList)
             {
-                if (exchange.getPrice() > this.mBuyList.get(i).getPrice())
+                if (exchange.getPrice() <= item.getPrice())
                 {
-                    candidate = this.mBuyList.get(--i);
+                    candidate = item;
                     break;
                 }
-
-                candidate = this.mBuyList.get(i);
             }
 
-            // Candidate must be find, this is for later checking
+            // Candidate must be found, but checking is always awesome!
             if (candidate == null)
             {
                 Log.e(TAG, "Candidate did not found!");
                 return;
             }
 
-            // Case 4.1, If quantity of order is more than/equal to the quantity of candidate
+            // Case 4.1, If quantity of order is more than the quantity of candidate
             if (exchange.getQuantity() > candidate.getQuantity())
             {
                 Log.d(TAG, "Case 4.1 called");
                 exchange.sell(candidate.getOrigin(), candidate.getPrice(), candidate.getQuantity());
                 this.mBuyList.remove(candidate);
-                this.mSellList.add(exchange);
+
+                // recursion
+                placeOrder(exchange);
+                return;
             }
             // Case 4.2, If quantity of order is equal to the quantity of candidate
             else if (exchange.getQuantity() == candidate.getQuantity())
@@ -298,9 +299,6 @@ public class MainActivity extends AppCompatActivity
                 exchange.sell(candidate.getOrigin(), candidate.getPrice(), exchange.getQuantity());
             }
 
-            Collections.sort(this.mSellList, new ExchangeComparator());
-            Collections.sort(this.mBuyList, new ExchangeComparator());
-            Collections.reverse(this.mBuyList);
             this.refreshRecyclerView();
             return;
         }
