@@ -1,4 +1,4 @@
-package com.mobify.hesam;
+package com.kamalan.trade;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.mobify.model.Exchange;
+import com.kamalan.model.Exchange;
 
 import java.util.ArrayList;
 import java.util.Collections;

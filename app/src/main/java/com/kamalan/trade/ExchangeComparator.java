@@ -1,6 +1,6 @@
-package com.mobify.hesam;
+package com.kamalan.trade;
 
-import com.mobify.model.Exchange;
+import com.kamalan.model.Exchange;
 
 import java.util.Comparator;
 

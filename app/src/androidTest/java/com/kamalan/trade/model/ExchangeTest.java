@@ -1,10 +1,10 @@
-package com.mobify.hesam.model;
+package com.kamalan.trade.model;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.mobify.hesam.MainActivity;
-import com.mobify.model.Exchange;
+import com.kamalan.trade.MainActivity;
+import com.kamalan.model.Exchange;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package com.mobify.hesam;
+package com.kamalan.trade;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mobify.model.Exchange;
+import com.kamalan.model.Exchange;
 
 /**
  * The order dialog is responsible to get order from user. Order category, Buy or Sell, should be

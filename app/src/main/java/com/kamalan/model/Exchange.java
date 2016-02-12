@@ -1,9 +1,7 @@
-package com.mobify.model;
+package com.kamalan.model;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-
-import java.util.Comparator;
 
 /**
  * Implement the `Exchange` stub class found below. A stub test suite is also included.

@@ -1,4 +1,4 @@
-package com.mobify.hesam;
+package com.kamalan.trade;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
