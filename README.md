@@ -1,4 +1,9 @@
-[![Build Status](https://travis-ci.org/Payum/Payum.png?branch=master)](https://circleci.com/gh/Hesamedin/Mobicoin)
+[![Build Status](https://www.bitrise.io/app/4886abd509866ee0.svg?token=8P5LaRGmYu-Mn60dy7QGlw&branch=master)](https://www.bitrise.io/app/4886abd509866ee0)
+
+## Build Info:
+Version_Code:1
+
+Version_Name:1.0
                       
                       _.--.
                   _.-'_:-'||

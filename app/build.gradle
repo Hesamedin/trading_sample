@@ -1,4 +1,7 @@
+import com.kamalan.plugin.BumpReadMeVersionPlugin
+
 apply plugin: 'com.android.application'
+apply plugin: BumpReadMeVersionPlugin
 
 android {
     compileSdkVersion 23
@@ -58,4 +61,8 @@ dependencies {
         exclude module: 'support-v13'
         exclude module: 'recyclerview-v7'
     }
+}
+
+bumpReadMeVersion {
+    overrideContent = 'app:'
 }
