@@ -101,8 +101,8 @@ public class OrderDialogFragment extends DialogFragment implements View.OnClickL
 
                 try
                 {
-                    quantity = Integer.valueOf(this.mEtQuantity.getText().toString().trim());
-                    price = Float.valueOf(this.mEtPrice.getText().toString().trim());
+                    quantity = Integer.parseInt(this.mEtQuantity.getText().toString().trim());
+                    price = Float.parseFloat(this.mEtPrice.getText().toString().trim());
                 }
                 catch (NumberFormatException e)
                 {
