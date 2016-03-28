@@ -3,6 +3,16 @@ import com.kamalan.plugin.BumpReadMeVersionPlugin
 apply plugin: 'com.android.application'
 apply plugin: BumpReadMeVersionPlugin
 
+def getAppVersionCode = { ->
+    def code = project.hasProperty('versionCode') ? versionCode.toInteger() : -1
+    return code
+}
+
+def getAppVersionName = { ->
+    def name = project.hasProperty('versionName') ? versionName : "1.0"
+    return name
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -11,8 +21,8 @@ android {
         applicationId "com.kamalan.trade"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode getAppVersionCode()
+        versionName getAppVersionName()
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -21,6 +31,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        applicationVariants.all { variant ->
+            variant.outputs.each { v ->
+                def f = v.outputFile
+                def sha = 'git rev-parse --short HEAD'.execute().text.trim()
+                def fname = f.name.replace(".apk", "-${defaultConfig.versionName}-${defaultConfig.versionCode}-${sha}.apk")
+                v.outputFile = new File(f.parent, fname)
+            }
         }
     }
 
