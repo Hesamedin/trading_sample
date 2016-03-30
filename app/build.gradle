@@ -3,15 +3,21 @@ import com.kamalan.plugin.BumpReadMeVersionPlugin
 apply plugin: 'com.android.application'
 apply plugin: BumpReadMeVersionPlugin
 
+// =================================================================================================
+// This block must not be modified unless BumpVersion.groovy task updates accordingly.
+def android_version_code=1
+def android_version_name="1.0.2"
+
 def getAppVersionCode = { ->
-    def code = project.hasProperty('versionCode') ? versionCode.toInteger() : -1
+    def code = project.hasProperty('versionCode') ? versionCode.toInteger() : android_version_code
     return code
 }
 
 def getAppVersionName = { ->
-    def name = project.hasProperty('versionName') ? versionName : "1.0"
+    def name = project.hasProperty('versionName') ? versionName : android_version_name
     return name
 }
+//==================================================================================================
 
 android {
     compileSdkVersion 23

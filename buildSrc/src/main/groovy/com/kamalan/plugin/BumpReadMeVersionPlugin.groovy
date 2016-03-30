@@ -18,6 +18,7 @@ public class BumpReadMeVersionPlugin implements Plugin<Project> {
         project.afterEvaluate {
             project.task('bumpVersion', type: BumpVersion) {
                 readMe = new File(project.rootDir.absolutePath + "/README.md")
+                buildGradle = new File(project.rootDir.absolutePath + "/app/build.gradle")
                 versionCode = project.android.defaultConfig.versionCode
                 versionName = project.android.defaultConfig.versionName
             }
