@@ -6,7 +6,7 @@ apply plugin: BumpReadMeVersionPlugin
 // =================================================================================================
 // This block must not be modified unless BumpVersion.groovy task updates accordingly.
 def android_version_code=1
-def android_version_name="1.0.2"
+def android_version_name="1.0"
 
 def getAppVersionCode = { ->
     def code = project.hasProperty('versionCode') ? versionCode.toInteger() : android_version_code
