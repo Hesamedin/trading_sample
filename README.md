@@ -1,9 +1,9 @@
 [![Build Status](https://www.bitrise.io/app/4886abd509866ee0.svg?token=8P5LaRGmYu-Mn60dy7QGlw&branch=master)](https://www.bitrise.io/app/4886abd509866ee0)
 
 ## Build Info:
-Version_Code:1
+Version_Code:2
 
-Version_Name:1.0
+Version_Name:2.0
                       
                       _.--.
                   _.-'_:-'||
